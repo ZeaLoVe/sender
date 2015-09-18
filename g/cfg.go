@@ -33,12 +33,20 @@ type ApiConfig struct {
 }
 
 type GlobalConfig struct {
-	Debug  bool          `json:"debug"`
-	Http   *HttpConfig   `json:"http"`
-	Redis  *RedisConfig  `json:"redis"`
-	Queue  *QueueConfig  `json:"queue"`
-	Worker *WorkerConfig `json:"worker"`
-	Api    *ApiConfig    `json:"api"`
+	Debug      bool          `json:"debug"`
+	Http       *HttpConfig   `json:"http"`
+	Redis      *RedisConfig  `json:"redis"`
+	Queue      *QueueConfig  `json:"queue"`
+	Worker     *WorkerConfig `json:"worker"`
+	Maildirect *MailDirect   `json:"maildirect"`
+	Api        *ApiConfig    `json:"api"`
+}
+
+type MailDirect struct {
+	Enabled  bool   `json:"enabled"`
+	Server   string `json:"server"`
+	User     string `json:"user"`
+	Password string `json:"password"`
 }
 
 var (
