@@ -58,5 +58,4 @@ func SendPhone(phone *model.Phone) {
 			log.Println("==phone==>>>>", phone)
 		}
 	}
-
 }
