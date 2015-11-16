@@ -1,16 +1,18 @@
 package cron
 
 import (
-	"github.com/open-falcon/sender/g"
+	"github.com/ZeaLoVe/sender/g"
 )
 
 var (
-	SmsWorkerChan  chan int
-	MailWorkerChan chan int
+	IMSmsWorkerChan chan int
+	MailWorkerChan  chan int
+	PhoneWorkerChan chan int
 )
 
 func InitWorker() {
 	workerConfig := g.Config().Worker
-	SmsWorkerChan = make(chan int, workerConfig.Sms)
+	IMSmsWorkerChan = make(chan int, workerConfig.IMSms)
 	MailWorkerChan = make(chan int, workerConfig.Mail)
+	PhoneWorkerChan = make(chan int, workerConfig.Phone)
 }

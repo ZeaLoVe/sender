@@ -1,8 +1,8 @@
 package redis
 
 import (
+	"github.com/ZeaLoVe/sender/g"
 	"github.com/garyburd/redigo/redis"
-	"github.com/open-falcon/sender/g"
 	"log"
 	"time"
 )

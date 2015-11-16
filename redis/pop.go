@@ -2,13 +2,13 @@ package redis
 
 import (
 	"encoding/json"
+	"github.com/ZeaLoVe/go-utils/model"
 	"github.com/garyburd/redigo/redis"
-	"github.com/open-falcon/sender/model"
 	"log"
 )
 
-func PopAllSms(queue string) []*model.Sms {
-	ret := []*model.Sms{}
+func PopAllPhone(queue string) []*model.Phone {
+	ret := []*model.Phone{}
 
 	rc := ConnPool.Get()
 	defer rc.Close()
@@ -26,14 +26,46 @@ func PopAllSms(queue string) []*model.Sms {
 			continue
 		}
 
-		var sms model.Sms
-		err = json.Unmarshal([]byte(reply), &sms)
+		var phone model.Phone
+		err = json.Unmarshal([]byte(reply), &phone)
 		if err != nil {
 			log.Println(err, reply)
 			continue
 		}
 
-		ret = append(ret, &sms)
+		ret = append(ret, &phone)
+	}
+
+	return ret
+}
+
+func PopAllIMSms(queue string) []*model.IMSms {
+	ret := []*model.IMSms{}
+
+	rc := ConnPool.Get()
+	defer rc.Close()
+
+	for {
+		reply, err := redis.String(rc.Do("RPOP", queue))
+		if err != nil {
+			if err != redis.ErrNil {
+				log.Println(err)
+			}
+			break
+		}
+
+		if reply == "" || reply == "nil" {
+			continue
+		}
+
+		var imsms model.IMSms
+		err = json.Unmarshal([]byte(reply), &imsms)
+		if err != nil {
+			log.Println(err, reply)
+			continue
+		}
+
+		ret = append(ret, &imsms)
 	}
 
 	return ret

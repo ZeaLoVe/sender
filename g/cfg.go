@@ -18,34 +18,52 @@ type RedisConfig struct {
 }
 
 type QueueConfig struct {
-	Sms  string `json:"sms"`
-	Mail string `json:"mail"`
+	Sms   string `json:"sms"`
+	Mail  string `json:"mail"`
+	IMSms string `json:"im"`
+	Phone string `json:"phone"`
 }
 
 type WorkerConfig struct {
-	Sms  int `json:"sms"`
-	Mail int `json:"mail"`
-}
-
-type ApiConfig struct {
-	Sms  string `json:"sms"`
-	Mail string `json:"mail"`
+	IMSms int `json:"im"`
+	Mail  int `json:"mail"`
+	Phone int `json:"phone"`
 }
 
 type GlobalConfig struct {
-	Debug      bool          `json:"debug"`
-	Http       *HttpConfig   `json:"http"`
-	Redis      *RedisConfig  `json:"redis"`
-	Queue      *QueueConfig  `json:"queue"`
-	Worker     *WorkerConfig `json:"worker"`
-	Maildirect *MailDirect   `json:"maildirect"`
-	Api        *ApiConfig    `json:"api"`
+	Debug  bool          `json:"debug"`
+	Http   *HttpConfig   `json:"http"`
+	Redis  *RedisConfig  `json:"redis"`
+	Queue  *QueueConfig  `json:"queue"`
+	Worker *WorkerConfig `json:"worker"`
+	Acount *AcountConfig `json:"acount"`
+	Hosts  *HostsConfig  `json:"hosts"`
 }
 
-type MailDirect struct {
-	Enabled  bool   `json:"enabled"`
+type HostsConfig struct {
+	Api_url  string `json:"api"`
+	Interval int    `json:"interval"`
+}
+
+type AcountConfig struct {
+	IM    *IMConfig    `json:"im"`
+	Phone *PhoneConfig `json:"phone"`
+	Mail  *MailConfig  `json:"mail"`
+}
+
+type PhoneConfig struct {
+	Key    string `json:"key"`
+	Serect string `json:"secret"`
+}
+
+type MailConfig struct {
 	Server   string `json:"server"`
 	User     string `json:"user"`
+	Password string `json:"password"`
+}
+
+type IMConfig struct {
+	Uri      string `json:"uri"`
 	Password string `json:"password"`
 }
 

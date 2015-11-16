@@ -5,8 +5,11 @@ import (
 	"runtime"
 )
 
+//v0.0.2 changes
+//send mail by smtp, set acount in config
+//add 99u msg ,phone by nexmo api
 const (
-	VERSION = "0.0.0"
+	VERSION = "sdpv0.0.2"
 )
 
 func init() {

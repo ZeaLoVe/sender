@@ -2,14 +2,14 @@ package http
 
 import (
 	"fmt"
-	"github.com/open-falcon/sender/proc"
+	"github.com/ZeaLoVe/sender/proc"
 	"net/http"
 )
 
 func configProcRoutes() {
 
 	http.HandleFunc("/count", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(fmt.Sprintf("sms:%v, mail:%v", proc.GetSmsCount(), proc.GetMailCount())))
+		w.Write([]byte(fmt.Sprintf("im_sms:%v, mail:%v, phone:%v", proc.GetIMSmsCount(), proc.GetMailCount(), proc.GetPhoneCount())))
 	})
 
 }

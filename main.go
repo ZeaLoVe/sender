@@ -33,8 +33,9 @@ func main() {
 	redis.InitConnPool()
 
 	go http.Start()
-	go cron.ConsumeSms()
+	go cron.ConsumeIMSms()
 	go cron.ConsumeMail()
+	go cron.ConsumePhone()
 
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
