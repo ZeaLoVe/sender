@@ -3,9 +3,9 @@ package cron
 import (
 	"github.com/ZeaLoVe/go-utils/model"
 	"github.com/ZeaLoVe/go-utils/nexmo"
-	"github.com/open-falcon/sender/g"
-	"github.com/open-falcon/sender/proc"
-	"github.com/open-falcon/sender/redis"
+	"github.com/ZeaLoVe/sender/g"
+	"github.com/ZeaLoVe/sender/proc"
+	"github.com/ZeaLoVe/sender/redis"
 	"log"
 	"strings"
 	"time"
