@@ -36,6 +36,7 @@ func main() {
 	go cron.ConsumeIMSms()
 	go cron.ConsumeMail()
 	go cron.ConsumePhone()
+	go cron.UpdateHostMap()
 
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)

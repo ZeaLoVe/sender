@@ -1,6 +1,7 @@
 package cron
 
 import (
+	"fmt"
 	"github.com/ZeaLoVe/go-utils/model"
 	"github.com/ZeaLoVe/go-utils/smtp"
 	"github.com/ZeaLoVe/sender/g"
@@ -13,6 +14,9 @@ import (
 var MailSender smtp.SmtpMailSender
 
 func ConsumeMail() {
+	if g.Config().Acount.Mail == nil {
+		return
+	}
 	//init mail acount
 	var acount smtp.MailAcount
 	acount.Password = g.Config().Acount.Mail.Password
@@ -21,6 +25,7 @@ func ConsumeMail() {
 	MailSender.SetMailAcount(&acount)
 
 	queue := g.Config().Queue.Mail
+
 	for {
 		L := redis.PopAllMail(queue)
 		if len(L) == 0 {
@@ -47,14 +52,23 @@ func SendMail(mail *model.Mail) {
 
 	tmp_mail := smtp.Mail{
 		Tos:     mail.Tos,
-		Subject: mail.Subject,
-		Content: mail.Content,
+		Subject: TransContent(mail.Subject),
+		Content: TransContent(mail.Content),
 	}
 
 	err := MailSender.SendMail(&tmp_mail)
 	if err != nil {
-		log.Println(err.Error())
+		log.Printf("邮件:%s 发送给:%s, 发送失败，错误:%s\n", mail.Subject, mail.Tos, err.Error())
 	}
+	if err == nil {
+		recordMsg := fmt.Sprintf("警报:%s\n已通过 %s 发送给 %s\n",
+			mail.Subject,
+			"mail",
+			mail.Tos)
+
+		RecordAlarm(recordMsg)
+	}
+
 	proc.IncreMailCount()
 
 	if g.Config().Debug {

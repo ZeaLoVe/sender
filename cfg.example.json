@@ -1,23 +1,39 @@
 {
-    "debug": true,
+    "debug": false,
     "http": {
         "enabled": true,
         "listen": "0.0.0.0:6066"
     },
     "redis": {
-        "addr": "127.0.0.1:6379",
+        "addr": "172.24.133.109:6380",
         "maxIdle": 5
     },
     "queue": {
-        "sms": "/sms",
-        "mail": "/mail"
+       	"sms": "/sms",
+        "mail": "/mail",
+		"im":"/im",
+		"phone":"/phone"
     },
     "worker": {
-        "sms": 10,
-        "mail": 50
+        "im": 20,
+        "mail": 20,
+		"phone":5
     },
-    "api": {
-        "sms": "http://11.11.11.11:8000/sms",
-        "mail": "http://11.11.11.11:9000/mail"
-    }
+	"acount":{
+		"im":{
+			"uri": "281474976720222",
+			"password": "6c5b701c-e438-4426-879e-522829c4e6d6",
+			"group":"4165164"
+		},
+		"mail":{
+        	"server":"smtp.sina.com",
+        	"user":"ruanguiliang_34@sina.com",
+        	"password":"sos2821373"
+    	},
+		"phone":{
+			"key":"07907a4c",
+			"secret":"026575f6",
+			"callback":"http://61.147.187.235:8011/hello"
+		}	
+	}
 }

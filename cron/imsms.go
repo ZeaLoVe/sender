@@ -1,6 +1,7 @@
 package cron
 
 import (
+	"fmt"
 	"github.com/ZeaLoVe/go-utils/im"
 	"github.com/ZeaLoVe/go-utils/model"
 	"github.com/ZeaLoVe/sender/g"
@@ -13,7 +14,21 @@ import (
 
 var IMSender im.IM99U
 
+func RecordAlarm(recordMsg string) {
+	tos := g.Config().Acount.IM.Group
+	if tos == "" {
+		return
+	}
+	err := IMSender.SendMsg(strings.Split(tos, ","), recordMsg)
+	if err != nil {
+		log.Printf("record fail:%s with err:%s", recordMsg, err.Error())
+	}
+}
+
 func ConsumeIMSms() {
+	if g.Config().Acount.IM == nil {
+		return
+	}
 	ac := im.Acount{
 		Uri:      g.Config().Acount.IM.Uri,
 		Password: g.Config().Acount.IM.Password,
@@ -21,6 +36,7 @@ func ConsumeIMSms() {
 	IMSender.SetAcount(&ac)
 
 	queue := g.Config().Queue.IMSms
+
 	for {
 		L := redis.PopAllIMSms(queue)
 		if len(L) == 0 {
@@ -44,7 +60,20 @@ func SendSms(imsms *model.IMSms) {
 	}()
 
 	//	fmt.Println(sms.Tos)
-	IMSender.SendMsg(strings.Split(imsms.Tos, ","), imsms.Content)
+	err := IMSender.SendMsg(strings.Split(imsms.Tos, ","), TransContent(imsms.Content))
+
+	if err != nil {
+		log.Printf("IM消息:%s to:%s 发送失败。错误:%s\n", imsms.Content, imsms.Tos, err.Error())
+	}
+
+	if err == nil {
+		recordMsg := fmt.Sprintf("警报:%s\n已通过 %s 发送给 %s\n",
+			imsms.Content,
+			"99u",
+			imsms.Tos)
+
+		RecordAlarm(recordMsg)
+	}
 
 	proc.IncreIMSmsCount()
 

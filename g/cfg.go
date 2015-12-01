@@ -52,8 +52,9 @@ type AcountConfig struct {
 }
 
 type PhoneConfig struct {
-	Key    string `json:"key"`
-	Serect string `json:"secret"`
+	Key      string `json:"key"`
+	Serect   string `json:"secret"`
+	Callback string `json:"callback,omitempty"`
 }
 
 type MailConfig struct {
@@ -62,9 +63,11 @@ type MailConfig struct {
 	Password string `json:"password"`
 }
 
+//group用来记录发送历史，为99U群号，所有发送历史都会汇总发到该群组（通过逗号分割）
 type IMConfig struct {
 	Uri      string `json:"uri"`
 	Password string `json:"password"`
+	Group    string `json:"group,omitempty"`
 }
 
 var (
