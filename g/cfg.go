@@ -2,9 +2,10 @@ package g
 
 import (
 	"encoding/json"
-	"github.com/toolkits/file"
 	"log"
 	"sync"
+
+	"github.com/toolkits/file"
 )
 
 type HttpConfig struct {
@@ -65,9 +66,10 @@ type MailConfig struct {
 
 //group用来记录发送历史，为99U群号，所有发送历史都会汇总发到该群组（通过逗号分割）
 type IMConfig struct {
-	Uri      string `json:"uri"`
-	Password string `json:"password"`
-	Group    string `json:"group,omitempty"`
+	Uri        string `json:"uri"`
+	Password   string `json:"password"`
+	Group      string `json:"group,omitempty"`
+	PhoneGroup string `json:"group,omitempty"`
 }
 
 var (

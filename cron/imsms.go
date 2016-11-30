@@ -2,14 +2,15 @@ package cron
 
 import (
 	"fmt"
+	"log"
+	"strings"
+	"time"
+
 	"github.com/ZeaLoVe/go-utils/im"
 	"github.com/ZeaLoVe/go-utils/model"
 	"github.com/ZeaLoVe/sender/g"
 	"github.com/ZeaLoVe/sender/proc"
 	"github.com/ZeaLoVe/sender/redis"
-	"log"
-	"strings"
-	"time"
 )
 
 var IMSender im.IM99U
@@ -22,6 +23,17 @@ func RecordAlarm(recordMsg string) {
 	err := IMSender.SendMsg(strings.Split(tos, ","), recordMsg)
 	if err != nil {
 		log.Printf("record fail:%s with err:%s", recordMsg, err.Error())
+	}
+}
+
+func RecordPhoneAlarm(recordMsg string) {
+	tos := g.Config().Acount.IM.PhoneGroup
+	if tos == "" {
+		return
+	}
+	err := IMSender.SendMsg(strings.Split(tos, ","), recordMsg)
+	if err != nil {
+		log.Printf("record phone alarm fail:%s with err:%s", recordMsg, err.Error())
 	}
 }
 

@@ -2,14 +2,15 @@ package cron
 
 import (
 	"fmt"
+	"log"
+	"strings"
+	"time"
+
 	"github.com/ZeaLoVe/go-utils/model"
 	"github.com/ZeaLoVe/go-utils/nexmo"
 	"github.com/ZeaLoVe/sender/g"
 	"github.com/ZeaLoVe/sender/proc"
 	"github.com/ZeaLoVe/sender/redis"
-	"log"
-	"strings"
-	"time"
 )
 
 var PhoneSender nexmo.Nexmo
@@ -71,6 +72,7 @@ func SendPhone(phone *model.Phone) {
 				resp.Call_id)
 
 			RecordAlarm(recordMsg)
+			RecordPhoneAlarm(recordMsg)
 		}
 
 		proc.IncrePhoneCount()
