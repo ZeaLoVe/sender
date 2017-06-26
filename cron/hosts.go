@@ -3,13 +3,14 @@ package cron
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/ZeaLoVe/sender/g"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/ZeaLoVe/sender/g"
 )
 
 type ResponseHost struct {
@@ -91,6 +92,9 @@ func UpdateHostMap() {
 
 //该函数可以搜索content，并从中提取 Endpoint: 后面跟的内容。判断依据是非数字字母下划线中划线
 func GetEndpoint(content string) string {
+	if !strings.Contains(content, "Endpoint:") {
+		return ""
+	}
 	var index, end int
 	index = strings.Index(content, "Endpoint:") + 9
 	for i := index; i < len(content); i++ {
