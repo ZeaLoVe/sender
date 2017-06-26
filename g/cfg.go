@@ -69,7 +69,7 @@ type IMConfig struct {
 	Uri        string `json:"uri"`
 	Password   string `json:"password"`
 	Group      string `json:"group,omitempty"`
-	PhoneGroup string `json:"group,omitempty"`
+	PhoneGroup string `json:"phonegroup,omitempty"`
 }
 
 var (
