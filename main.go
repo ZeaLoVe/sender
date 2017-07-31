@@ -3,13 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
+
 	"github.com/ZeaLoVe/sender/cron"
 	"github.com/ZeaLoVe/sender/g"
 	"github.com/ZeaLoVe/sender/http"
 	"github.com/ZeaLoVe/sender/redis"
-	"os"
-	"os/signal"
-	"syscall"
 )
 
 func main() {
@@ -36,6 +37,7 @@ func main() {
 	go cron.ConsumeIMSms()
 	go cron.ConsumeMail()
 	go cron.ConsumePhone()
+	go cron.ConsumeWechat()
 	go cron.UpdateHostMap()
 
 	sigs := make(chan os.Signal, 1)

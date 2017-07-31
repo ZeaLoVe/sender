@@ -4,7 +4,7 @@ import (
 	"sync/atomic"
 )
 
-var imsmsCount, mailCount, phoneCount uint32
+var imsmsCount, mailCount, phoneCount, wechatCount uint32
 
 func GetIMSmsCount() uint32 {
 	return atomic.LoadUint32(&imsmsCount)
@@ -18,6 +18,10 @@ func GetPhoneCount() uint32 {
 	return atomic.LoadUint32(&phoneCount)
 }
 
+func GetWechatCount() uint32 {
+	return atomic.LoadUint32(&wechatCount)
+}
+
 func IncreIMSmsCount() {
 	atomic.AddUint32(&imsmsCount, 1)
 }
@@ -28,4 +32,8 @@ func IncreMailCount() {
 
 func IncrePhoneCount() {
 	atomic.AddUint32(&phoneCount, 1)
+}
+
+func IncreWechatCount() {
+	atomic.AddUint32(&wechatCount, 1)
 }

@@ -5,9 +5,10 @@ import (
 )
 
 var (
-	IMSmsWorkerChan chan int
-	MailWorkerChan  chan int
-	PhoneWorkerChan chan int
+	IMSmsWorkerChan  chan int
+	MailWorkerChan   chan int
+	PhoneWorkerChan  chan int
+	WechatWorkerChan chan int
 )
 
 func InitWorker() {
@@ -15,4 +16,5 @@ func InitWorker() {
 	IMSmsWorkerChan = make(chan int, workerConfig.IMSms)
 	MailWorkerChan = make(chan int, workerConfig.Mail)
 	PhoneWorkerChan = make(chan int, workerConfig.Phone)
+	WechatWorkerChan = make(chan int, workerConfig.Wechat)
 }

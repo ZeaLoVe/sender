@@ -2,9 +2,10 @@ package redis
 
 import (
 	"encoding/json"
+	"log"
+
 	"github.com/ZeaLoVe/go-utils/model"
 	"github.com/garyburd/redigo/redis"
-	"log"
 )
 
 func PopAllPhone(queue string) []*model.Phone {
@@ -98,6 +99,38 @@ func PopAllMail(queue string) []*model.Mail {
 		}
 
 		ret = append(ret, &mail)
+	}
+
+	return ret
+}
+
+func PopAllWechat(queue string) []*model.WechatSms {
+	ret := []*model.WechatSms{}
+
+	rc := ConnPool.Get()
+	defer rc.Close()
+
+	for {
+		reply, err := redis.String(rc.Do("RPOP", queue))
+		if err != nil {
+			if err != redis.ErrNil {
+				log.Println(err)
+			}
+			break
+		}
+
+		if reply == "" || reply == "nil" {
+			continue
+		}
+
+		var wechat model.WechatSms
+		err = json.Unmarshal([]byte(reply), &wechat)
+		if err != nil {
+			log.Println(err, reply)
+			continue
+		}
+
+		ret = append(ret, &wechat)
 	}
 
 	return ret

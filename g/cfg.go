@@ -19,16 +19,18 @@ type RedisConfig struct {
 }
 
 type QueueConfig struct {
-	Sms   string `json:"sms"`
-	Mail  string `json:"mail"`
-	IMSms string `json:"im"`
-	Phone string `json:"phone"`
+	Sms    string `json:"sms"`
+	Mail   string `json:"mail"`
+	IMSms  string `json:"im"`
+	Phone  string `json:"phone"`
+	Wechat string `json:"wechat"`
 }
 
 type WorkerConfig struct {
-	IMSms int `json:"im"`
-	Mail  int `json:"mail"`
-	Phone int `json:"phone"`
+	IMSms  int `json:"im"`
+	Mail   int `json:"mail"`
+	Phone  int `json:"phone"`
+	Wechat int `json:"wechat"`
 }
 
 type GlobalConfig struct {
@@ -47,9 +49,10 @@ type HostsConfig struct {
 }
 
 type AcountConfig struct {
-	IM    *IMConfig    `json:"im"`
-	Phone *PhoneConfig `json:"phone"`
-	Mail  *MailConfig  `json:"mail"`
+	IM     *IMConfig     `json:"im"`
+	Phone  *PhoneConfig  `json:"phone"`
+	Mail   *MailConfig   `json:"mail"`
+	Wechat *WechatConfig `json:"wechat"`
 }
 
 type PhoneConfig struct {
@@ -70,6 +73,12 @@ type IMConfig struct {
 	Password   string `json:"password"`
 	Group      string `json:"group,omitempty"`
 	PhoneGroup string `json:"phonegroup,omitempty"`
+}
+
+type WechatConfig struct {
+	CorpId    string `json:"corp_id"`
+	AgentId   string `json:"agent_id"`
+	SecretKey string `json:"secret_key"`
 }
 
 var (
